@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,64 +15,39 @@ import java.util.UUID;
 public class Quests {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
+    private BigInteger ID;
+
+    @DatabaseField
     private UUID uuid;
 
     @DatabaseField
-    private String quests;
+    private long banTime;
+
+    @DatabaseField
+    private long unbanTime;
+
+    @DatabaseField
+    private String reason;
+
+    @DatabaseField
+    private UUID banner;
+
+    @DatabaseField(defaultValue = "false")
+    private boolean disabled;
 
     public Quests() {
     }
 
-    public void create(UUID uuid) {
+    public void create(UUID uuid, long banTime, long unbanTime, String reason, UUID banner) {
         this.uuid = uuid;
-        quests = hashMapToString(new HashMap<String, Integer>());
+        this.banTime = banTime;
+        this.unbanTime = unbanTime;
+        this.reason = reason;
+        this.banner = banner;
     }
 
     public UUID getUUID() {
         return uuid;
-    }
-
-    public void addFinishedQuest(String questID) {
-        HashMap<String, Integer> quests;
-        if (this.quests == null || this.quests.isEmpty() || this.quests.equals("{}")) {
-            quests = new HashMap<>();
-        } else {
-            quests = (HashMap<String, Integer>) stringToHashMap(this.quests);
-        }
-
-        if (quests.containsKey(questID)) {
-            quests.put(questID, quests.get(questID) + 1);
-            this.quests = hashMapToString(quests);
-            return;
-        }
-
-        quests.put(questID, 1);
-        this.quests = hashMapToString(quests);
-    }
-
-    public HashMap<String, Integer> getFinishedQuests() {
-        return (HashMap<String, Integer>) stringToHashMap(quests);
-    }
-
-    public Map<String, Integer> stringToHashMap(String jsonString) {
-        Map<String, Integer> resultMap = null;
-        try {
-            resultMap = objectMapper.readValue(jsonString, new TypeReference<HashMap<String, Integer>>() {
-            });
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultMap;
-    }
-
-    public String hashMapToString(Map<String, Integer> map) {
-        String jsonString = null;
-        try {
-            jsonString = objectMapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return jsonString;
     }
 }
