@@ -2,7 +2,7 @@ package de.frinshhd.bungee;
 
 import net.md_5.bungee.api.plugin.Plugin;
 
-public final class Main extends Plugin {
+public final class BungeeMain extends Plugin {
 
     @Override
     public void onEnable() {

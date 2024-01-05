@@ -8,31 +8,31 @@ import java.math.BigInteger;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "Quests")
-public class Ban {
+public class BanSQL {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @DatabaseField(generatedId = true)
-    private BigInteger id;
+    public BigInteger id;
 
     @DatabaseField
-    private UUID uuid;
+    public UUID uuid;
 
     @DatabaseField
-    private long banTime;
+    public long banTime;
 
     @DatabaseField
-    private long unbanTime;
+    public long unbanTime;
 
     @DatabaseField
-    private String reason;
+    public String reason;
 
     @DatabaseField
-    private UUID banner;
+    public UUID banner;
 
     @DatabaseField(defaultValue = "false")
-    private boolean disabled;
+    public boolean disabled;
 
-    public Ban() {
+    public BanSQL() {
     }
 
     public void create(UUID uuid, long banTime, long unbanTime, String reason, UUID banner) {

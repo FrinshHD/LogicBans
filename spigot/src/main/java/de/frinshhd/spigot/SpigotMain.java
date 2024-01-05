@@ -2,11 +2,17 @@ package de.frinshhd.spigot;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Main extends JavaPlugin {
+public final class SpigotMain extends JavaPlugin {
+
+    private static JavaPlugin instance;
+
+    public static JavaPlugin getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        instance = this;
         System.out.println("byeeee");
     }
 

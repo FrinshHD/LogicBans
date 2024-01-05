@@ -2,7 +2,7 @@ package de.frinshhd.core.utils;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import de.frinshhd.core.Main;
+import de.frinshhd.core.CoreMain;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +12,7 @@ import java.net.URL;
 public class SpigotMCCommunication {
 
     public static void init(String currentVersion) {
-        Main.latestVersion = checkForNewVersion(currentVersion);
+        CoreMain.latestVersion = checkForNewVersion(currentVersion);
     }
     public static String checkForNewVersion(String currentVersion) {
         try {

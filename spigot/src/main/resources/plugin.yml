@@ -1,5 +1,5 @@
 name: AnturniaBans
 version: '${project.version}'
-main: de.frinshhd.spigot.Main
+main: de.frinshhd.spigot.SpigotMain
 api-version: '1.19'
 author: FrinshHD
