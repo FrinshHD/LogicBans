@@ -9,8 +9,6 @@
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 
-    <name>AnturniaBans</name>
-
     <parent>
         <groupId>de.frinshhd</groupId>
         <artifactId>AnturniaBans</artifactId>
@@ -69,6 +67,11 @@
             <artifactId>bungeecord-api</artifactId>
             <version>1.20-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.frinshhd</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,4 +1,4 @@
-name: '${project.name}'
+name: AnturniaBans
 version: '${project.version}'
 main: de.frinshhd.bungee.Main
 author: FrinshHD

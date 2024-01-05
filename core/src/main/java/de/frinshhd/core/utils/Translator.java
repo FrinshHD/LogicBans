@@ -13,6 +13,10 @@ public class Translator {
         messages.load(stream);
     }
 
+    public static String build(String messageKey, String... args) {
+        return null;
+    }
+
     public static String buildRaw(String messageKey, String... args) {
         if (!messages.containsKey(messageKey)) {
             throw new RuntimeException(messageKey + " is not a valid message key!");

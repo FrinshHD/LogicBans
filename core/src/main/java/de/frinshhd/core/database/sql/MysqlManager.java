@@ -4,7 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import de.frinshhd.core.database.sql.entities.Quests;
+import de.frinshhd.core.database.sql.entities.Ban;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -17,8 +17,8 @@ public class MysqlManager {
 
     public static JdbcConnectionSource connectionSource;
 
-    public static Dao<Quests, Long> getQuestDao() throws SQLException {
-        return DaoManager.createDao(connectionSource, Quests.class);
+    public static Dao<Ban, Long> getBansDao() throws SQLException {
+        return DaoManager.createDao(connectionSource, Ban.class);
     }
 
     public static void connect() throws SQLException {
@@ -29,18 +29,18 @@ public class MysqlManager {
             connect();
         }
 
-        TableUtils.createTableIfNotExists(connectionSource, Quests.class);
+        TableUtils.createTableIfNotExists(connectionSource, Ban.class);
     }
 
-    public static Quests getQuestPlayer(UUID uuid) {
-        Dao<Quests, Long> questsDao = null;
+    public static Ban getBanPlayer(UUID uuid) {
+        Dao<Ban, Long> questsDao = null;
         try {
-            questsDao = getQuestDao();
+            questsDao = getBansDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        List<Quests> quests = null;
+        List<Ban> quests = null;
         try {
             quests = questsDao.queryForEq("uuid", uuid);
         } catch (SQLException e) {

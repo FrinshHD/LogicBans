@@ -1,22 +1,18 @@
 package de.frinshhd.core.database.sql.entities;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "Quests")
-public class Quests {
+public class Ban {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @DatabaseField(generatedId = true)
-    private BigInteger ID;
+    private BigInteger id;
 
     @DatabaseField
     private UUID uuid;
@@ -36,7 +32,7 @@ public class Quests {
     @DatabaseField(defaultValue = "false")
     private boolean disabled;
 
-    public Quests() {
+    public Ban() {
     }
 
     public void create(UUID uuid, long banTime, long unbanTime, String reason, UUID banner) {
@@ -49,5 +45,9 @@ public class Quests {
 
     public UUID getUUID() {
         return uuid;
+    }
+
+    public void setDisabled() {
+        this.disabled = true;
     }
 }
