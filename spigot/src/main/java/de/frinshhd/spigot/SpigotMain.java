@@ -1,5 +1,6 @@
 package de.frinshhd.spigot;
 
+import de.frinshhd.spigot.utils.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SpigotMain extends JavaPlugin {
@@ -13,7 +14,10 @@ public final class SpigotMain extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        System.out.println("byeeee");
+
+        //Bstats
+        int pluginId = 1234;
+        Metrics metrics = new Metrics(this, pluginId);
     }
 
     @Override

@@ -3,3 +3,8 @@ version: '${project.version}'
 main: de.frinshhd.spigot.SpigotMain
 api-version: '1.19'
 author: FrinshHD
+
+commands:
+  ban:
+
+permissions:
