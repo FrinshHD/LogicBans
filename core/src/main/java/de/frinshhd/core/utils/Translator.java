@@ -13,22 +13,23 @@ public class Translator {
         messages.load(stream);
     }
 
-    public static String build(String messageKey, String... args) {
+    public static String build(String messageKey, TranslatorPlaceholder... translatorPlaceholders) {
         return null;
     }
 
-    public static String buildRaw(String messageKey, String... args) {
+    public static String buildRaw(String messageKey, TranslatorPlaceholder... translatorPlaceholders) {
         if (!messages.containsKey(messageKey)) {
             throw new RuntimeException(messageKey + " is not a valid message key!");
         }
 
         String message = messages.get(messageKey).toString();
 
-        for (int i = 0; i < args.length; i++) {
-            message = message.replace("{" + i + "}", args[i]);
+        for (TranslatorPlaceholder translatorPlaceholder : translatorPlaceholders) {
+            message = message.replace("%" + translatorPlaceholder.key + "&", translatorPlaceholder.value);
         }
 
         return message;
     }
 
 }
+

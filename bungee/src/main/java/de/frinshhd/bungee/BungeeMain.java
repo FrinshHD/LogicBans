@@ -14,6 +14,6 @@ public final class BungeeMain extends Plugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 }

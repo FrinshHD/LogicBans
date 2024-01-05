@@ -9,4 +9,7 @@ public class Config {
     @JsonProperty
     public Database database;
 
+    @JsonProperty
+    public boolean debug;
+
 }

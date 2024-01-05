@@ -3,6 +3,7 @@ package de.frinshhd.spigot.commands;
 import de.frinshhd.core.Ban;
 import de.frinshhd.core.CoreMain;
 import de.frinshhd.spigot.SpigotMain;
+import de.frinshhd.spigot.utils.SpigotCommandExecutor;
 import de.frinshhd.spigot.utils.SpigotTranslator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +12,13 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class BanCommand implements CommandExecutor {
+public class BanCommand extends SpigotCommandExecutor {
+
+
+    public BanCommand() {
+        super("ban");
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender.hasPermission("anturniabans.ban")) {
