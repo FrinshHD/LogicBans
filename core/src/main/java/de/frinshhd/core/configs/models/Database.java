@@ -15,10 +15,10 @@ public class Database {
     public String password = null;
 
     @JsonProperty
-    public String ip;
+    public String ip = "localhost";
 
     @JsonProperty
-    public int port;
+    public int port = 3306;
 
 
     @JsonIgnore
