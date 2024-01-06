@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.math.BigInteger;
 import java.util.UUID;
 
-@DatabaseTable(tableName = "Quests")
+@DatabaseTable(tableName = "Bans")
 public class BanSQL {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

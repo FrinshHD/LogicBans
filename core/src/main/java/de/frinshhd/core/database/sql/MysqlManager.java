@@ -3,9 +3,12 @@ package de.frinshhd.core.database.sql;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.logger.Level;
+import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.table.TableUtils;
 import de.frinshhd.core.CoreMain;
 import de.frinshhd.core.database.sql.entities.BanSQL;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

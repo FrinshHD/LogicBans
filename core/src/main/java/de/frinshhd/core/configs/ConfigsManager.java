@@ -3,6 +3,8 @@ package de.frinshhd.core.configs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import com.j256.ormlite.logger.Level;
+import com.j256.ormlite.logger.Logger;
 import de.frinshhd.core.CoreMain;
 import de.frinshhd.core.configs.models.Config;
 import de.frinshhd.core.database.sql.MysqlManager;
@@ -50,6 +52,10 @@ public class ConfigsManager {
                 break;
             default:
         }
+    }
+
+    public void setLogLevels() {
+        Logger.setGlobalLogLevel(Level.OFF);
     }
 
     public void load() throws IOException {
