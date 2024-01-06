@@ -25,12 +25,24 @@ public class ConfigsManager {
         }
 
         // connect to database
+        connectToDatabase();
+    }
+
+    public void connectToDatabase() {
         switch (this.config.database.getType()) {
             case MYSQL:
+                try {
+                    MysqlManager.connect("jdbc:mysql://" + this.config.database.ip + ":" + this.config.database.port + "/AnturniaBans", this.config.database.username, this.config.database.password);
+                } catch (SQLException e) {
+                    //Todo logging
+                    throw new RuntimeException(e);
+                }
+                break;
             case SQLITE:
                 try {
-                    MysqlManager.connect();
+                    MysqlManager.connect("jdbc:sqlite:plugins/AnturniaBans/sqlite.db");
                 } catch (SQLException e) {
+                    //Todo logging
                     throw new RuntimeException(e);
                 }
                 break;

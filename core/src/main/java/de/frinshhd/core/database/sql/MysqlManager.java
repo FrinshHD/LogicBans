@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import de.frinshhd.core.CoreMain;
 import de.frinshhd.core.database.sql.entities.BanSQL;
 
 import java.sql.Connection;
@@ -21,12 +22,24 @@ public class MysqlManager {
         return DaoManager.createDao(connectionSource, BanSQL.class);
     }
 
-    public static void connect() throws SQLException {
-        try {
-            connectionSource = new JdbcConnectionSource("jdbc:sqlite:plugins/AnturniaBans/sqlite.db");
-        } catch (SQLException e) {
-            createNewDatabase();
-            connect();
+    public static void connect(String url) throws SQLException {
+        connect(url, null, null);
+    }
+
+    public static void connect(String url, String userName, String password) throws SQLException {
+        if (userName == null && password == null) {
+            try {
+                connectionSource = new JdbcConnectionSource(url);
+            } catch (SQLException e) {
+                createNewSqliteDatabase();
+                connect(url,userName,password);
+            }
+        } else {
+            try {
+                connectionSource = new JdbcConnectionSource(url, userName, password);
+            } catch (SQLException e) {
+                //Todo: logging
+            }
         }
 
         TableUtils.createTableIfNotExists(connectionSource, BanSQL.class);
@@ -64,10 +77,10 @@ public class MysqlManager {
         }
 
         disconnect();
-        connect();
+        CoreMain.getConfigsManager().connectToDatabase();
     }
 
-    public static void createNewDatabase() {
+    public static void createNewSqliteDatabase() {
 
         String url = "jdbc:sqlite:plugins/AnturniaBans/sqlite.db";
 
@@ -75,6 +88,7 @@ public class MysqlManager {
             Connection conn = DriverManager.getConnection(url);
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
+                //Todo: logging
                 System.out.println("The driver name is " + meta.getDriverName());
                 System.out.println("A new database has been created.");
             }

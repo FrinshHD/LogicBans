@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.frinshhd.core.utils.DatabaseTypes;
 
 public class Database {
-
     @JsonProperty
     private String type = "sqlite";
 
@@ -14,6 +13,13 @@ public class Database {
 
     @JsonProperty
     public String password = null;
+
+    @JsonProperty
+    public String ip;
+
+    @JsonProperty
+    public int port;
+
 
     @JsonIgnore
     public DatabaseTypes getType() {
