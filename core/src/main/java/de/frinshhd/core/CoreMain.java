@@ -36,12 +36,12 @@ public class CoreMain {
         files.addAll(List.of("config.yml"));
 
         for (String fileRaw : files) {
-            File file = new File("plugins/AnturniaQuests/" + fileRaw);
+            File file = new File("plugins/AnturniaBans/" + fileRaw);
             if (file.exists()) {
                 continue;
             }
 
-            InputStream link = (CoreMain.class.getResourceAsStream(fileRaw));
+            InputStream link = (CoreMain.class.getClassLoader().getResourceAsStream(fileRaw));
             try {
                 Files.copy(link, file.getAbsoluteFile().toPath());
             } catch (IOException e) {
@@ -56,6 +56,10 @@ public class CoreMain {
     }
 
     public static void reload() {
-        getConfigsManager().load();
+        try {
+            getConfigsManager().load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

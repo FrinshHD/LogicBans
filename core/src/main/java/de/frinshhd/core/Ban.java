@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.util.UUID;
 
 public class Ban {
-    public BigInteger id;
+    public int id;
 
     public UUID uuid;
 

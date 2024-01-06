@@ -12,7 +12,7 @@ public class BanSQL {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @DatabaseField(generatedId = true)
-    public BigInteger id;
+    public int id;
 
     @DatabaseField
     public UUID uuid;

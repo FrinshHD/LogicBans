@@ -7,9 +7,9 @@ import javax.xml.crypto.Data;
 public class Config {
 
     @JsonProperty
-    public Database database;
+    public Database database = new Database();
 
     @JsonProperty
-    public boolean debug;
+    public boolean debug = false;
 
 }

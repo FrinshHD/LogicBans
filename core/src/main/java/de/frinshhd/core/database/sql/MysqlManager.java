@@ -23,7 +23,7 @@ public class MysqlManager {
 
     public static void connect() throws SQLException {
         try {
-            connectionSource = new JdbcConnectionSource("jdbc:sqlite:plugins/AnturniaQuests/sqlite.db");
+            connectionSource = new JdbcConnectionSource("jdbc:sqlite:plugins/AnturniaBans/sqlite.db");
         } catch (SQLException e) {
             createNewDatabase();
             connect();
@@ -59,7 +59,7 @@ public class MysqlManager {
     }
 
     public static void checkConnection() throws Exception {
-        if (connectionSource.isOpen("Quests")) {
+        if (connectionSource.isOpen("Bans")) {
             return;
         }
 
@@ -69,7 +69,7 @@ public class MysqlManager {
 
     public static void createNewDatabase() {
 
-        String url = "jdbc:sqlite:plugins/AnturniaQuests/sqlite.db";
+        String url = "jdbc:sqlite:plugins/AnturniaBans/sqlite.db";
 
         try {
             Connection conn = DriverManager.getConnection(url);
