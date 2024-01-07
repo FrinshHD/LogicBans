@@ -25,9 +25,10 @@ public class ConfigsManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         // connect to database
         connectToDatabase();
+
+        setLogLevels();
     }
 
     public void connectToDatabase() {
@@ -55,14 +56,17 @@ public class ConfigsManager {
     }
 
     public void setLogLevels() {
-        Logger.setGlobalLogLevel(Level.OFF);
+        if (config.debug) {
+            Logger.setGlobalLogLevel(Level.DEBUG);
+        } else {
+            Logger.setGlobalLogLevel(Level.ERROR);
+        }
     }
 
     public void load() throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER));
         File configFile = new File("plugins/AnturniaBans/config.yml");
 
-        //this.config = mapper.readValue(new FileInputStream("plugins/AnturniaQuests/config.yml"), Config.class);
         this.config = mapper.readValue(configFile, Config.class);
 
         mapper.writeValue(configFile, this.config);

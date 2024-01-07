@@ -30,6 +30,7 @@ public class BanCommand extends SpigotCommandExecutor {
 
                 if (player == null) {
                     //Todo: tell admin that this player isn't online
+                    sender.sendMessage(SpigotTranslator.build(""));
                     return false;
                 }
 
