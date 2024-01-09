@@ -24,14 +24,18 @@ public class BanCommand extends SpigotCommandExecutor {
         if (sender.hasPermission("anturniabans.ban")) {
 
             if (args.length >= 1) {
+                String playerName;
+                UUID playerUUID = null;
                 Player player = SpigotMain.getInstance().getServer().getPlayer(args[0]);
                 UUID bannerUUID = null;
                 String reason = null;
 
                 if (player == null) {
-                    //Todo: tell admin that this player isn't online
-                    sender.sendMessage(SpigotTranslator.build(""));
+                    playerName = args[0];
                     return false;
+                } else {
+                    playerName = player.getName();
+                    playerUUID = player.getUniqueId();
                 }
 
                 if (sender instanceof Player) {
@@ -39,7 +43,7 @@ public class BanCommand extends SpigotCommandExecutor {
                 }
 
 
-                Ban ban = CoreMain.getBanManager().banPlayer(player.getUniqueId(), bannerUUID, -1, args, 1);
+                Ban ban = CoreMain.getBanManager().banPlayer(playerName, playerUUID, bannerUUID, -1, args, 1);
                 //Todo: tell admin that he banned the player with the reason
                 return true;
             }

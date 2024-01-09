@@ -19,14 +19,14 @@ public class DatabaseManager {
 
     }
 
-    public Ban banPlayer(UUID playerUUID, long banTime, long unbanTime, String reason, UUID banner) throws SQLException {
+    public Ban banPlayer(String playerName, UUID playerUUID, long banTime, long unbanTime, String reason, UUID banner) throws SQLException {
         switch (CoreMain.getConfigsManager().config.database.getType()) {
             case MYSQL:
             case SQLITE:
                 Dao<BanSQL, Long> bansDao = null;
                 bansDao = MysqlManager.getBansDao();
                 BanSQL banSQL = new BanSQL();
-                banSQL.create(playerUUID, banTime, unbanTime, reason, banner);
+                banSQL.create(playerName, playerUUID, banTime, unbanTime, reason, banner);
                 bansDao.create(banSQL);
 
                 return sqlBantoBan(banSQL);

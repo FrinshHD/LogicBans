@@ -15,6 +15,9 @@ public class BanSQL {
     public int id;
 
     @DatabaseField
+    public String playerName;
+
+    @DatabaseField
     public UUID uuid;
 
     @DatabaseField
@@ -35,7 +38,7 @@ public class BanSQL {
     public BanSQL() {
     }
 
-    public void create(UUID uuid, long banTime, long unbanTime, String reason, UUID banner) {
+    public void create(String playerName, UUID uuid, long banTime, long unbanTime, String reason, UUID banner) {
         this.uuid = uuid;
         this.banTime = banTime;
         this.unbanTime = unbanTime;

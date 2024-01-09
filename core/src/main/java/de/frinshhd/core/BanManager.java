@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class BanManager {
 
-    public Ban banPlayer(UUID playerUUID, UUID bannerUUID, long duration, String[] args, int argsToSkip) {
+    public Ban banPlayer(String playerName, UUID playerUUID, UUID bannerUUID, long duration, String[] args, int argsToSkip) {
         String reason = null;
         long unbanTime = -1;
 
@@ -24,7 +24,7 @@ public class BanManager {
 
         Ban ban;
         try {
-            ban = CoreMain.getDatabaseManager().banPlayer(playerUUID, System.currentTimeMillis(), unbanTime, reason, bannerUUID);
+            ban = CoreMain.getDatabaseManager().banPlayer(playerName, playerUUID, System.currentTimeMillis(), unbanTime, reason, bannerUUID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
