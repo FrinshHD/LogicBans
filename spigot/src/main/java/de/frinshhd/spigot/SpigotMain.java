@@ -4,6 +4,7 @@ import de.frinshhd.core.CoreMain;
 import de.frinshhd.spigot.utils.DynamicCommands;
 import de.frinshhd.spigot.utils.DynamicListeners;
 import de.frinshhd.spigot.utils.Metrics;
+import de.frinshhd.spigot.utils.SpigotTranslator;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;

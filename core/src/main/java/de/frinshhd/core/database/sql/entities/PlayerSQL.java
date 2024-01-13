@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "Players")
-public class PlayersSQL {
+public class PlayerSQL {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -21,18 +21,20 @@ public class PlayersSQL {
     public String playerName;
 
 
-    public PlayersSQL() {}
+    public PlayerSQL() {}
 
-    public UUID create(String playerName, UUID playerUUID) {
+    public void create(String playerName, UUID playerUUID) {
         this.uuid = UUID.randomUUID();
 
-        this.playerName = playerName;
+        this.playerName = playerName.toLowerCase();
         this.playerUUID = playerUUID;
-
-        return this.uuid;
     }
 
     public void updatePlayerName(String playerName) {
-        this.playerName = playerName;
+        this.playerName = playerName.toLowerCase();
+    }
+
+    public void setPlayerUUID(UUID playerUUID) {
+        this.playerUUID = playerUUID;
     }
 }

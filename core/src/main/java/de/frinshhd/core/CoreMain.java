@@ -2,8 +2,10 @@ package de.frinshhd.core;
 
 import de.frinshhd.core.configs.ConfigsManager;
 import de.frinshhd.core.database.DatabaseManager;
+import de.frinshhd.core.utils.Translator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -53,6 +55,13 @@ public class CoreMain {
         configsManager = new ConfigsManager();
         databaseManager = new DatabaseManager();
         banManager = new BanManager();
+
+        // register messages
+        try {
+            Translator.register(new FileInputStream("plugins/AnturniaBans/messages.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void reload() {

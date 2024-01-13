@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.math.BigInteger;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "Bans")
@@ -18,7 +17,7 @@ public class BanSQL {
     public String playerName;
 
     @DatabaseField
-    public UUID uuid;
+    public UUID playerID;
 
     @DatabaseField
     public long banTime;
@@ -30,7 +29,7 @@ public class BanSQL {
     public String reason;
 
     @DatabaseField
-    public UUID banner;
+    public UUID bannerID;
 
     @DatabaseField(defaultValue = "false")
     public boolean disabled;
@@ -38,16 +37,16 @@ public class BanSQL {
     public BanSQL() {
     }
 
-    public void create(String playerName, UUID uuid, long banTime, long unbanTime, String reason, UUID banner) {
-        this.uuid = uuid;
+    public void create(UUID playerID, long banTime, long unbanTime, String reason, UUID bannerID) {
+        this.playerID = playerID;
         this.banTime = banTime;
         this.unbanTime = unbanTime;
         this.reason = reason;
-        this.banner = banner;
+        this.bannerID = bannerID;
     }
 
-    public UUID getUUID() {
-        return uuid;
+    public UUID getPlayerID() {
+        return playerID;
     }
 
     public void setDisabled() {

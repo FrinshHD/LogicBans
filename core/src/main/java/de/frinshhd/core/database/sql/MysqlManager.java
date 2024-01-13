@@ -8,6 +8,7 @@ import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.table.TableUtils;
 import de.frinshhd.core.CoreMain;
 import de.frinshhd.core.database.sql.entities.BanSQL;
+import de.frinshhd.core.database.sql.entities.PlayerSQL;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
@@ -23,6 +24,10 @@ public class MysqlManager {
 
     public static Dao<BanSQL, Long> getBansDao() throws SQLException {
         return DaoManager.createDao(connectionSource, BanSQL.class);
+    }
+
+    public static Dao<PlayerSQL, Long> getPlayerDao() throws SQLException {
+        return DaoManager.createDao(connectionSource, PlayerSQL.class);
     }
 
     public static void connect(String url) throws SQLException {
@@ -46,28 +51,6 @@ public class MysqlManager {
         }
 
         TableUtils.createTableIfNotExists(connectionSource, BanSQL.class);
-    }
-
-    public static BanSQL getBanPlayer(UUID uuid) {
-        Dao<BanSQL, Long> questsDao = null;
-        try {
-            questsDao = getBansDao();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        List<BanSQL> quests = null;
-        try {
-            quests = questsDao.queryForEq("uuid", uuid);
-        } catch (SQLException e) {
-            return null;
-        }
-
-        if (quests.isEmpty()) {
-            return null;
-        }
-
-        return quests.get(0);
     }
 
     public static void disconnect() throws Exception {

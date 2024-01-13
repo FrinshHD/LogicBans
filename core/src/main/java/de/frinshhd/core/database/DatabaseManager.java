@@ -5,6 +5,7 @@ import de.frinshhd.core.Ban;
 import de.frinshhd.core.CoreMain;
 import de.frinshhd.core.database.sql.MysqlManager;
 import de.frinshhd.core.database.sql.entities.BanSQL;
+import de.frinshhd.core.database.sql.entities.PlayerSQL;
 
 import java.math.BigInteger;
 import java.sql.SQLException;
@@ -26,7 +27,14 @@ public class DatabaseManager {
                 Dao<BanSQL, Long> bansDao = null;
                 bansDao = MysqlManager.getBansDao();
                 BanSQL banSQL = new BanSQL();
-                banSQL.create(playerName, playerUUID, banTime, unbanTime, reason, banner);
+                UUID playerID = getPlayerDatabaseID(playerName);
+                UUID bannerID = getPlayerDatabaseID(banner);
+
+                if (playerID == null) {
+                    playerID = createPlayerDatabase(playerName, playerUUID);
+                }
+
+                banSQL.create(playerID, banTime, unbanTime, reason, bannerID);
                 bansDao.create(banSQL);
 
                 return sqlBantoBan(banSQL);
@@ -60,8 +68,9 @@ public class DatabaseManager {
             case SQLITE:
                 Dao<BanSQL, Long> bansDao = null;
                 bansDao = MysqlManager.getBansDao();
-                bans.addAll(bansDao.queryForEq("uuid", playerUUID));
+                UUID playerID = getPlayerDatabaseID(playerUUID);
 
+                bans.addAll(bansDao.queryForEq("uuid", playerID));
                 return bans;
             case MONGODB:
                 return bans;
@@ -89,11 +98,111 @@ public class DatabaseManager {
         ban.id = banSQL.id;
         ban.banTime = banSQL.banTime;
         ban.unbanTime = banSQL.unbanTime;
-        ban.uuid = banSQL.uuid;
-        ban.banner = banSQL.banner;
+        ban.uuid = banSQL.playerID;
+        ban.banner = banSQL.bannerID;
         ban.disabled = banSQL.disabled;
         ban.reason = banSQL.reason;
 
         return ban;
+    }
+
+    //PlayersDatabase
+    public UUID getPlayerDatabaseID(UUID playerUUID) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                Dao<PlayerSQL, Long> playerDao = null;
+                playerDao = MysqlManager.getPlayerDao();
+                return playerDao.queryForEq("playerUUID", playerUUID).stream().toList().get(0).uuid;
+            case MONGODB:
+                break;
+        }
+
+        return null;
+    }
+
+    public UUID getPlayerDatabaseID(String playerName) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                Dao<PlayerSQL, Long> playerDao = null;
+                playerDao = MysqlManager.getPlayerDao();
+                return playerDao.queryForEq("playerName", playerName.toLowerCase()).stream().toList().get(0).uuid;
+            case MONGODB:
+                break;
+        }
+
+        return null;
+    }
+
+    public UUID createPlayerDatabase(String playerName, UUID playerUUID) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                Dao<PlayerSQL, Long> playerDao = null;
+                playerDao = MysqlManager.getPlayerDao();
+                PlayerSQL player = new PlayerSQL();
+                player.create(playerName, playerUUID);
+                playerDao.create(player);
+
+                return player.uuid;
+            case MONGODB:
+                break;
+        }
+
+        return null;
+    }
+
+    public void updatePlayerDatabaseName(UUID playerUUID, String playerName) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                Dao<PlayerSQL, Long> playerDao = null;
+                playerDao = MysqlManager.getPlayerDao();
+                PlayerSQL player = playerDao.queryForEq("playerUUID", playerUUID).stream().toList().get(0);
+                player.updatePlayerName(playerName);
+                playerDao.update(player);
+
+                break;
+            case MONGODB:
+                break;
+        }
+    }
+
+    public void setPlayerDatabaseUUID(String playerName, UUID playerUUID) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                Dao<PlayerSQL, Long> playerDao = null;
+                playerDao = MysqlManager.getPlayerDao();
+                PlayerSQL player = playerDao.queryForEq("playerName", playerName.toLowerCase()).stream().toList().get(0);
+                player.setPlayerUUID(playerUUID);
+                playerDao.update(player);
+
+                break;
+            case MONGODB:
+                break;
+        }
+    }
+
+    public void checkPlayerDatabaseRegistered(String playerName, UUID playerUUID) throws SQLException {
+        UUID playerID = getPlayerDatabaseID(playerUUID);
+
+        //if now playerUUID found
+        if (playerID == null) {
+            playerID = getPlayerDatabaseID(playerName);
+
+            //if name also not registered create new entry
+            // if name registered set the correct uuid
+            if (playerID == null) {
+                createPlayerDatabase(playerName, playerUUID);
+            } else {
+                setPlayerDatabaseUUID(playerName, playerUUID);
+            }
+
+            return;
+        }
+
+        updatePlayerDatabaseName(playerUUID, playerName);
     }
 }
