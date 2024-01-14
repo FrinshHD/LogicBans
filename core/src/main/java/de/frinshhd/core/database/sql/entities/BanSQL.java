@@ -14,9 +14,6 @@ public class BanSQL {
     public int id;
 
     @DatabaseField
-    public String playerName;
-
-    @DatabaseField
     public UUID playerID;
 
     @DatabaseField

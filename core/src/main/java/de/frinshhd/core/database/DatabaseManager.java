@@ -113,7 +113,12 @@ public class DatabaseManager {
             case SQLITE:
                 Dao<PlayerSQL, Long> playerDao = null;
                 playerDao = MysqlManager.getPlayerDao();
-                return playerDao.queryForEq("playerUUID", playerUUID).stream().toList().get(0).uuid;
+
+                try {
+                    return playerDao.queryForEq("playerUUID", playerUUID).stream().toList().get(0).uuid;
+                } catch (SQLException | ArrayIndexOutOfBoundsException e) {
+                    return null;
+                }
             case MONGODB:
                 break;
         }
@@ -127,7 +132,12 @@ public class DatabaseManager {
             case SQLITE:
                 Dao<PlayerSQL, Long> playerDao = null;
                 playerDao = MysqlManager.getPlayerDao();
-                return playerDao.queryForEq("playerName", playerName.toLowerCase()).stream().toList().get(0).uuid;
+
+                try {
+                    return playerDao.queryForEq("playerName", playerName.toLowerCase()).stream().toList().get(0).uuid;
+                } catch (SQLException | ArrayIndexOutOfBoundsException e) {
+                    return null;
+                }
             case MONGODB:
                 break;
         }

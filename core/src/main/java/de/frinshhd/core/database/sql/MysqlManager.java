@@ -51,6 +51,7 @@ public class MysqlManager {
         }
 
         TableUtils.createTableIfNotExists(connectionSource, BanSQL.class);
+        TableUtils.createTableIfNotExists(connectionSource, PlayerSQL.class);
     }
 
     public static void disconnect() throws Exception {

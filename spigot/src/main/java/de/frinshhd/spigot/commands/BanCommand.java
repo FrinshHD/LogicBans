@@ -1,7 +1,9 @@
 package de.frinshhd.spigot.commands;
 
+import com.j256.ormlite.table.TableUtils;
 import de.frinshhd.core.Ban;
 import de.frinshhd.core.CoreMain;
+import de.frinshhd.core.database.sql.entities.BanSQL;
 import de.frinshhd.spigot.SpigotMain;
 import de.frinshhd.spigot.utils.SpigotCommandExecutor;
 import de.frinshhd.spigot.utils.SpigotTranslator;
@@ -32,7 +34,6 @@ public class BanCommand extends SpigotCommandExecutor {
 
                 if (player == null) {
                     playerName = args[0];
-                    return false;
                 } else {
                     playerName = player.getName();
                     playerUUID = player.getUniqueId();

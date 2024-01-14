@@ -35,7 +35,7 @@ public class CoreMain {
         new File("plugins/AnturniaBans").mkdir();
 
         List<String> files = new ArrayList<>();
-        files.addAll(List.of("config.yml"));
+        files.addAll(List.of("config.yml", "messages.properties"));
 
         for (String fileRaw : files) {
             File file = new File("plugins/AnturniaBans/" + fileRaw);
