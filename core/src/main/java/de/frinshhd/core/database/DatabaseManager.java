@@ -21,6 +21,10 @@ public class DatabaseManager {
     }
 
     public Ban banPlayer(String playerName, UUID playerUUID, long banTime, long unbanTime, String reason, UUID banner) throws SQLException {
+        if (isPlayerBanned(getPlayerDatabaseID(playerUUID))) {
+            return null;
+        }
+
         switch (CoreMain.getConfigsManager().config.database.getType()) {
             case MYSQL:
             case SQLITE:
@@ -60,17 +64,19 @@ public class DatabaseManager {
         }
     }
 
-    public ArrayList<BanSQL> getPlayerBans(UUID playerUUID) throws SQLException {
-        ArrayList<BanSQL> bans = new ArrayList<>();
+    public ArrayList<Ban> getPlayerBans(UUID playerID) throws SQLException {
+        ArrayList<Ban> bans = new ArrayList<>();
 
         switch (CoreMain.getConfigsManager().config.database.getType()) {
             case MYSQL:
             case SQLITE:
                 Dao<BanSQL, Long> bansDao = null;
                 bansDao = MysqlManager.getBansDao();
-                UUID playerID = getPlayerDatabaseID(playerUUID);
 
-                bans.addAll(bansDao.queryForEq("uuid", playerID));
+                for (BanSQL banSQL : bansDao.queryForEq("uuid", playerID)) {
+                    bans.add(sqlBantoBan(banSQL));
+                }
+
                 return bans;
             case MONGODB:
                 return bans;
@@ -79,18 +85,38 @@ public class DatabaseManager {
         return bans;
     }
 
-    public BanSQL getBan(BigInteger banID) throws SQLException {
+    public Ban getBan(BigInteger banID) throws SQLException {
         switch (CoreMain.getConfigsManager().config.database.getType()) {
             case MYSQL:
             case SQLITE:
                 Dao<BanSQL, Long> bansDao = null;
                 bansDao = MysqlManager.getBansDao();
-                return bansDao.queryForEq("id", banID).stream().toList().get(0);
+                return sqlBantoBan(bansDao.queryForEq("id", banID).stream().toList().get(0));
             case MONGODB:
                 return null;
         }
 
         return null;
+    }
+
+    public boolean isPlayerBanned(UUID playerID) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                ArrayList<Ban> bans = getPlayerBans(playerID);
+                Ban latestBan = null;
+                try {
+                    latestBan = bans.get(bans.size() - 1);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    return false;
+                }
+
+                return !latestBan.disabled;
+            case MONGODB:
+                return false;
+        }
+
+        return false;
     }
 
     public Ban sqlBantoBan(BanSQL banSQL) {

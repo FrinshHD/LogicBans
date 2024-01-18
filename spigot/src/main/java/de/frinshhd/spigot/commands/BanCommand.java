@@ -45,11 +45,19 @@ public class BanCommand extends SpigotCommandExecutor {
 
 
                 Ban ban = CoreMain.getBanManager().banPlayer(playerName, playerUUID, bannerUUID, -1, args, 1);
+
                 //Todo: tell admin that he banned the player with the reason
-                return true;
+                if (ban == null) {
+                    sender.sendMessage(SpigotTranslator.build("ban.alreadyBanned"));
+                    return false;
+                } else {
+                    sender.sendMessage(SpigotTranslator.build("ban.success"));
+                    return true;
+                }
             }
 
             // ToDo message to show the user how the command works
+            sender.sendMessage(SpigotTranslator.build("ban.helpMessage"));
             return false;
         }
 
