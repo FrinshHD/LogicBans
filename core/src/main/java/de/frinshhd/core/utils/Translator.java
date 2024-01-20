@@ -1,16 +1,37 @@
 package de.frinshhd.core.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import de.frinshhd.core.CoreMain;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 public class Translator {
 
     public static Properties messages;
 
-    public static void register(InputStream stream) throws IOException {
+    public static void register(String path) throws IOException {
         messages = new Properties();
-        messages.load(stream);
+
+        //load standard configuration
+        try (InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(CoreMain.class.getClassLoader().getResourceAsStream("messages.properties")), StandardCharsets.UTF_8)) {
+            messages.load(isr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //load probably modified file
+        try (FileInputStream fis = new FileInputStream(path);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            messages.load(isr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        messages.store(new FileOutputStream(path), null);
     }
 
     public static String build(String messageKey, TranslatorPlaceholder... translatorPlaceholders) {

@@ -58,7 +58,7 @@ public class CoreMain {
 
         // register messages
         try {
-            Translator.register(new FileInputStream("plugins/AnturniaBans/messages.properties"));
+            Translator.register("plugins/AnturniaBans/messages.properties");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -67,6 +67,7 @@ public class CoreMain {
     public static void reload() {
         try {
             getConfigsManager().load();
+            Translator.register("plugins/AnturniaBans/messages.properties");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

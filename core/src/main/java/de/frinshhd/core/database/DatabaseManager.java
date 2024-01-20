@@ -1,5 +1,6 @@
 package de.frinshhd.core.database;
 
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.j256.ormlite.dao.Dao;
 import de.frinshhd.core.Ban;
 import de.frinshhd.core.CoreMain;
@@ -10,6 +11,7 @@ import de.frinshhd.core.database.sql.entities.PlayerSQL;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.SimpleTimeZone;
 import java.util.UUID;
 
 public class DatabaseManager {
@@ -21,7 +23,7 @@ public class DatabaseManager {
     }
 
     public Ban banPlayer(String playerName, UUID playerUUID, long banTime, long unbanTime, String reason, UUID banner) throws SQLException {
-        if (isPlayerBanned(getPlayerDatabaseID(playerUUID))) {
+        if (isPlayerBanned(getPlayerDatabaseID(playerName, playerUUID))) {
             return null;
         }
 
@@ -73,8 +75,14 @@ public class DatabaseManager {
                 Dao<BanSQL, Long> bansDao = null;
                 bansDao = MysqlManager.getBansDao();
 
-                for (BanSQL banSQL : bansDao.queryForEq("uuid", playerID)) {
-                    bans.add(sqlBantoBan(banSQL));
+                try {
+                    for (BanSQL banSQL : bansDao.queryForEq("playerID", playerID)) {
+                        bans.add(sqlBantoBan(banSQL));
+                        System.out.println("2");
+                    }
+                } catch (SQLException e) {
+                    System.out.println("3");
+                    return bans;
                 }
 
                 return bans;
@@ -107,7 +115,7 @@ public class DatabaseManager {
                 Ban latestBan = null;
                 try {
                     latestBan = bans.get(bans.size() - 1);
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException e) {
                     return false;
                 }
 
@@ -133,6 +141,28 @@ public class DatabaseManager {
     }
 
     //PlayersDatabase
+    public UUID getPlayerDatabaseID(String playerName, UUID playerUUID) throws SQLException {
+        switch (CoreMain.getConfigsManager().config.database.getType()) {
+            case MYSQL:
+            case SQLITE:
+                Dao<PlayerSQL, Long> playerDao = null;
+                playerDao = MysqlManager.getPlayerDao();
+
+                try {
+                    return playerDao.queryForEq("playerUUID", playerUUID).stream().toList().get(0).uuid;
+                } catch (SQLException | ArrayIndexOutOfBoundsException e) {
+                    try {
+                        return playerDao.queryForEq("playerName", playerName.toLowerCase()).stream().toList().get(0).uuid;
+                    } catch (SQLException | ArrayIndexOutOfBoundsException e2) {
+                        return null;
+                    }
+                }
+            case MONGODB:
+                break;
+        }
+
+        return null;
+    }
     public UUID getPlayerDatabaseID(UUID playerUUID) throws SQLException {
         switch (CoreMain.getConfigsManager().config.database.getType()) {
             case MYSQL:
