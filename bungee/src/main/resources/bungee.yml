@@ -1,4 +1,4 @@
-name: AnturniaBans
+name: LogicBans
 version: '${project.version}'
 main: de.frinshhd.bungee.BungeeMain
 author: FrinshHD

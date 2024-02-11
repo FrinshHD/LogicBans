@@ -46,7 +46,7 @@ public class Translator {
         String message = messages.get(messageKey).toString();
 
         for (TranslatorPlaceholder translatorPlaceholder : translatorPlaceholders) {
-            message = message.replace("%" + translatorPlaceholder.key + "&", translatorPlaceholder.value);
+            message = message.replace("%" + translatorPlaceholder.key + "%", translatorPlaceholder.value);
         }
 
         return message;

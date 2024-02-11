@@ -32,13 +32,13 @@ public class CoreMain {
 
     public static void init() {
         //create files
-        new File("plugins/AnturniaBans").mkdir();
+        new File("plugins/LogicBans").mkdir();
 
         List<String> files = new ArrayList<>();
         files.addAll(List.of("config.yml", "messages.properties"));
 
         for (String fileRaw : files) {
-            File file = new File("plugins/AnturniaBans/" + fileRaw);
+            File file = new File("plugins/LogicBans/" + fileRaw);
             if (file.exists()) {
                 continue;
             }
@@ -58,7 +58,7 @@ public class CoreMain {
 
         // register messages
         try {
-            Translator.register("plugins/AnturniaBans/messages.properties");
+            Translator.register("plugins/LogicBans/messages.properties");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -67,7 +67,7 @@ public class CoreMain {
     public static void reload() {
         try {
             getConfigsManager().load();
-            Translator.register("plugins/AnturniaBans/messages.properties");
+            Translator.register("plugins/LogicBans/messages.properties");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

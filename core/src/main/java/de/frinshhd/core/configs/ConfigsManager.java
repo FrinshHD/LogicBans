@@ -35,7 +35,7 @@ public class ConfigsManager {
         switch (this.config.database.getType()) {
             case MYSQL:
                 try {
-                    MysqlManager.connect("jdbc:mysql://" + this.config.database.ip + ":" + this.config.database.port + "/AnturniaBans", this.config.database.username, this.config.database.password);
+                    MysqlManager.connect("jdbc:mysql://" + this.config.database.ip + ":" + this.config.database.port + "/LogicBans", this.config.database.username, this.config.database.password);
                 } catch (SQLException e) {
                     //Todo logging
                     throw new RuntimeException(e);
@@ -43,7 +43,7 @@ public class ConfigsManager {
                 break;
             case SQLITE:
                 try {
-                    MysqlManager.connect("jdbc:sqlite:plugins/AnturniaBans/sqlite.db");
+                    MysqlManager.connect("jdbc:sqlite:plugins/LogicBans/sqlite.db");
                 } catch (SQLException e) {
                     //Todo logging
                     throw new RuntimeException(e);
@@ -65,7 +65,7 @@ public class ConfigsManager {
 
     public void load() throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER));
-        File configFile = new File("plugins/AnturniaBans/config.yml");
+        File configFile = new File("plugins/LogicBans/config.yml");
 
         this.config = mapper.readValue(configFile, Config.class);
 

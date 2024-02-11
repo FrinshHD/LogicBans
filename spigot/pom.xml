@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.frinshhd</groupId>
-    <artifactId>spigot</artifactId>
+    <artifactId>LogicBans-spigot</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>de.frinshhd</groupId>
-        <artifactId>AnturniaBans</artifactId>
+        <artifactId>LogicBans</artifactId>
         <version>Beta-1.0.0</version>
     </parent>
 
@@ -73,7 +73,7 @@
         </dependency>
         <dependency>
             <groupId>de.frinshhd</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>LogicBans-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

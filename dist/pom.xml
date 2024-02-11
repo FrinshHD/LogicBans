@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>de.frinshhd</groupId>
-        <artifactId>AnturniaBans</artifactId>
+        <artifactId>LogicBans</artifactId>
         <version>Beta-1.0.0</version>
     </parent>
 
-    <artifactId>dist</artifactId>
+    <artifactId>LogicBans-dist</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -20,7 +20,7 @@
 
     <build>
         <directory>../target</directory>
-        <finalName>AnturniaBans-${project.parent.version}</finalName>
+        <finalName>LogicBans-${project.parent.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -48,17 +48,17 @@
     <dependencies>
         <dependency>
             <groupId>de.frinshhd</groupId>
-            <artifactId>spigot</artifactId>
+            <artifactId>LogicBans-spigot</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>de.frinshhd</groupId>
-            <artifactId>bungee</artifactId>
+            <artifactId>LogicBans-bungee</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>de.frinshhd</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>LogicBans-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

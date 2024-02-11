@@ -69,7 +69,7 @@ public class MysqlManager {
 
     public static void createNewSqliteDatabase() {
 
-        String url = "jdbc:sqlite:plugins/AnturniaBans/sqlite.db";
+        String url = "jdbc:sqlite:plugins/LogicBans/sqlite.db";
 
         try {
             Connection conn = DriverManager.getConnection(url);

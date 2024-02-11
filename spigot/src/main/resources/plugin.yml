@@ -1,4 +1,4 @@
-name: AnturniaBans
+name: LogicBans
 version: '${project.version}'
 main: de.frinshhd.spigot.SpigotMain
 api-version: '1.19'

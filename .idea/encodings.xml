@@ -5,8 +5,12 @@
     <file url="file://$PROJECT_DIR$/bungee/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dist/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dist/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spigot/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spigot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

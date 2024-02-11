@@ -23,7 +23,7 @@ public class BanCommand extends SpigotCommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (sender.hasPermission("anturniabans.ban")) {
+        if (sender.hasPermission("LogicBans.ban")) {
 
             if (args.length >= 1) {
                 String playerName;

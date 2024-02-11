@@ -76,12 +76,12 @@ class MinecraftClient:
 
 if __name__ == "__main__":
     async def run():
-        shutil.copyfile("./target/AnturniaBans-Beta-1.0.0.jar",
-                        "./serverBungee/plugins/AnturniaBans.jar")
+        shutil.copyfile("./target/LogicBans-Beta-1.0.0.jar",
+                        "./serverBungee/plugins/LogicBans.jar")
 
         async with MinecraftClient('localhost', 25575, 'nicepassword') as mc:
-            shutil.copyfile("./target/AnturniaBans-Beta-1.0.0.jar",
-                            "./server/plugins/AnturniaBans.jar")
+            shutil.copyfile("./target/LogicBans-Beta-1.0.0.jar",
+                            "./server/plugins/LogicBans.jar")
             output = await mc.send('reload confirm')
             print(output)
 
